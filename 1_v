@@ -1,0 +1,22 @@
+--Ποια πλοία τύπου cargo ήταν ‘αγκυροβολημένα’ (ταχύτητα μηδέν) κάποια στιγμή μέσα στην περίοδο 15/08/2019 - 18/08/2019; 
+--Ποια για ολόκληρη την περίοδο 12/08/2019 - 19/08/2019;
+--
+select '15/08/2019 - 18/08/2019' as date, a.vessel_id
+from
+    (select  p.vessel_id
+    from positions p
+    join vessels v on p.vessel_id = v.id
+    join vesseltypes vt on v.type = vt.code
+    where vt.description like 'Cargo%' and p.speed <= 0.1
+    and date(p.t) between '2019-08-15' and '2019-08-18' group by vessel_id) as a
+union all
+select '12/08/2019 - 19/08/2019' as date, b.vessel_id
+from
+    (select p.vessel_id
+    from positions p
+    join vessels v on p.vessel_id = v.id
+    join vesseltypes vt on v.type = vt.code
+    where vt.description like 'Cargo%' and p.speed <= 0.1
+    and date(p.t) between '2019-08-12' and '2019-08-19'
+    group by p.vessel_id
+    having count(distinct date(p.t)) = 8) as b;
