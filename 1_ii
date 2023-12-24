@@ -1,0 +1,7 @@
+--Βρείτε πόσα πλοία με ελληνική σημαία ανά τύπο πλοίου είναι καταγεγραμμένα 
+--
+select description,count(id) 
+from vessels as v inner join vesseltypes as vt
+on v.type =vt.code
+where flag = 'Greece' 
+group by description;
