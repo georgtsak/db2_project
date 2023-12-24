@@ -1,0 +1,27 @@
+CREATE TABLE IF NOT EXISTS VesselTypes(
+	code integer NOT NULL PRIMARY KEY,
+	description text
+);
+
+CREATE TABLE IF NOT EXISTS Vessels(
+	id varchar(64) NOT NULL PRIMARY KEY,
+	type integer,
+	flag varchar(30),
+	FOREIGN KEY (type) REFERENCES VesselTypes(code)
+);
+
+CREATE TABLE IF NOT EXISTS Positions(
+  	id bigint NOT NULL PRIMARY KEY,
+  	vessel_id varchar(64) NOT NULL,
+  	t timestamp NOT NULL,
+  	lon double precision NOT NULL,
+  	lat double precision NOT NULL,
+  	heading double precision,
+  	course double precision,
+  	speed double precision,
+  	FOREIGN KEY (vessel_id) REFERENCES Vessels(id)
+);
+
+COPY VesselTypes FROM 'C:\dbprojects\db2-project-dataset-fall2023\VesselTypes.csv' DELIMITER ',' CSV HEADER;
+COPY Vessels FROM 'C:\dbprojects\db2-project-dataset-fall2023\Vessels.csv' DELIMITER ',' CSV HEADER;
+COPY Positions FROM 'C:\dbprojects\db2-project-dataset-fall2023\Positions.csv' DELIMITER ',' CSV HEADER;
