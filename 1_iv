@@ -1,0 +1,9 @@
+--Ειδικά για τα επιβατηγά πλοία (τύποι «passenger …»), πόσα στίγματα 
+--καταγράφηκαν ανά ημέρα την περίοδο 14/08/2019 - 18/08/2019;
+--
+select date(t) as date1 ,count(lon)
+from positions as p 
+inner join vessels as v on p.vessel_id = v.id
+inner join vesseltypes as vt on v.type = vt.code
+where description like 'Passenger%' and date(t) between '2019-08-14' and '2019-08-18'
+group by date1;
