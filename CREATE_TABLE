@@ -25,3 +25,5 @@ CREATE TABLE IF NOT EXISTS Positions(
 COPY VesselTypes FROM 'C:\dbprojects\db2-project-dataset-fall2023\VesselTypes.csv' DELIMITER ',' CSV HEADER;
 COPY Vessels FROM 'C:\dbprojects\db2-project-dataset-fall2023\Vessels.csv' DELIMITER ',' CSV HEADER;
 COPY Positions FROM 'C:\dbprojects\db2-project-dataset-fall2023\Positions.csv' DELIMITER ',' CSV HEADER;
+
+VACUUM FULL;
