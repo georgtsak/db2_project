@@ -1,0 +1,9 @@
+--Βρείτε τον αριθμό των στιγμάτων (lon, lat) ανά ημερολογιακή ημέρα και 
+--ταξινομήστε το αποτέλεσμα σε φθίνουσα σειρά (ως προς το πλήθος των 
+--στιγμάτων).
+--
+-- count(lon) = count(lat) ara xrhsimopoiw mono to ena
+select date(t) as date, count(lon) as num_lon_lat
+from positions
+group by date(t)
+order by num_lon_lat desc;
