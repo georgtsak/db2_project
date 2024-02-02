@@ -1,0 +1,30 @@
+WITH VesselCounts AS (
+    SELECT
+        V.type,
+        COUNT(DISTINCT P.vessel_id) AS vessel_count
+    FROM
+        Positions P
+    LEFT JOIN
+        Vessels V ON P.vessel_id = V.id
+    WHERE
+        P.speed > 30
+    GROUP BY
+        V.type
+)
+
+SELECT DISTINCT ON (P.vessel_id)
+    P.vessel_id,
+    VT.description AS vessel_type_description,
+    VC.vessel_count
+FROM
+    Positions P
+LEFT JOIN
+    Vessels V ON P.vessel_id = V.id
+LEFT JOIN
+    VesselTypes VT ON V.type = VT.code
+LEFT JOIN
+    VesselCounts VC ON VT.code = VC.type
+WHERE
+    P.speed > 30
+ORDER BY
+    P.vessel_id, P.t DESC;
